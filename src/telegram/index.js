@@ -13,9 +13,8 @@ const telegramBot = require('./bot')
 })()
 
 const server = http.createServer((rqe, res) => {
-  res
-    .writeHead(200, { 'Content-type': 'text/html' })
-    .end(`<h1><a href="https://t.me/new_listings_bot">Telegram bot</a></h1>`)
+  res.writeHead(200, { 'Content-type': 'text/html' })
+  res.end(`<h1><a href="https://t.me/new_listings_bot">Telegram bot</a></h1>`)
 })
 
 server.listen(process.env.PORT)
