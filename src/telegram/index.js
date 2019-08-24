@@ -9,12 +9,13 @@ const telegramBot = require('./bot')
 
   telegramBot.start(handlers.start)
   telegramBot.command('subscribe', handlers.subscribe)
-  telegramBot.launch()
+  telegramBot.command('unsubscribe', handlers.unsubscribe)
+  telegramBot.command('subscriptions', handlers.subscriptions)
+  telegramBot.help(handlers.help)
+
+  telegramBot.telegram.setWebhook(process.env.TELEGRAM_WEBHOOK)
 })()
 
-const server = http.createServer((rqe, res) => {
-  res.writeHead(200, { 'Content-type': 'text/html' })
-  res.end(`<h1><a href="https://t.me/new_listings_bot">Telegram bot</a></h1>`)
-})
-
-server.listen(process.env.PORT)
+http
+  .createServer(telegramBot.webhookCallback(process.env.TELEGRAM_WEBHOOK_PATH))
+  .listen(process.env.PORT)

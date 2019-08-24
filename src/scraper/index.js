@@ -12,22 +12,26 @@ const helpers = require('../helpers')
 
   await helpers.reduceAsync(
     users.map(user => async () => {
-      const { subscribeUrl, sendedListings, chatId } = user
+      const { subscribedUrls, sendedListings, chatId } = user
 
-      await page.goto(subscribeUrl)
+      await helpers.reduceAsync(
+        subscribedUrls.map(url => async () => {
+          await page.goto(url)
 
-      const newListings = helpers.findNewListings(
-        await utils.scrapListingData(page, await page.$$('.listing-item')),
-        sendedListings
+          const newListings = helpers.findNewListings(
+            await utils.scrapListingData(page, await page.$$('.listing-item')),
+            sendedListings
+          )
+
+          if (newListings.length) {
+            await telegramActions.sendListingsToUser(telegramBot, user, newListings)
+            await dbActions.updateSendedListings(
+              chatId,
+              sendedListings.concat(newListings.map(l => l.listingId))
+            )
+          }
+        })
       )
-
-      if (newListings.length) {
-        await telegramActions.sendListingsToUser(telegramBot, user, newListings)
-        await dbActions.updateSendedListings(
-          chatId,
-          sendedListings.concat(newListings.map(l => l.listingId))
-        )
-      }
     })
   )
   await browser.close()

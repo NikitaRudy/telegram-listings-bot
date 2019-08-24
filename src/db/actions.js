@@ -1,7 +1,11 @@
 const User = require('./User')
 
+const getUser = chatId => User.findOne({ chatId }).lean()
 const getUsers = () => User.find().lean()
 const updateUser = (chatId, updates) => User.findOneAndUpdate({ chatId }, updates)
+const updateSendedListings = (chatId, listings) => updateUser(chatId, { sendedListings: listings })
+const getUsersWithSubscribedUrl = async () =>
+  (await getUsers()).filter(user => user.subscribedUrls.length)
 
 const saveUser = ({ username, chatId }) =>
   User.findOneAndUpdate(
@@ -10,9 +14,23 @@ const saveUser = ({ username, chatId }) =>
     { upsert: true, new: true, setDefaultsOnInsert: true }
   )
 
-const updateSendedListings = (chatId, listings) => updateUser(chatId, { sendedListings: listings })
+const addSubscribedUrl = async (chatId, url) => {
+  const { subscribedUrls = [] } = await getUser(chatId)
 
-const getUsersWithSubscribedUrl = async () => (await getUsers()).filter(user => user.subscribeUrl)
+  return updateUser(chatId, {
+    subscribedUrls: subscribedUrls.concat(url),
+  })
+}
+
+const removeSubscribedUrl = async (chatId, urlToRemove) => {
+  const { subscribedUrls = [] } = await getUser(chatId)
+
+  return updateUser(chatId, {
+    subscribedUrls: subscribedUrls.filter(url => url !== urlToRemove),
+  })
+}
+
+const removeSubscriptions = chatId => updateUser(chatId, { subscribedUrls: [] })
 
 module.exports = {
   saveUser,
@@ -20,4 +38,8 @@ module.exports = {
   getUsers,
   updateSendedListings,
   getUsersWithSubscribedUrl,
+  getUser,
+  removeSubscribedUrl,
+  addSubscribedUrl,
+  removeSubscriptions,
 }

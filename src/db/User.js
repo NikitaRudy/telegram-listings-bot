@@ -13,8 +13,9 @@ const userSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
-  subscribeUrl: {
-    type: String,
+  subscribedUrls: {
+    type: [String],
+    default: [],
   },
 })
 
