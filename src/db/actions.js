@@ -17,6 +17,10 @@ const saveUser = ({ username, chatId }) =>
 const addSubscribedUrl = async (chatId, url) => {
   const { subscribedUrls = [] } = await getUser(chatId)
 
+  if (subscribedUrls.includes(url)) {
+    return Promise.resolve()
+  }
+
   return updateUser(chatId, {
     subscribedUrls: subscribedUrls.concat(url),
   })
