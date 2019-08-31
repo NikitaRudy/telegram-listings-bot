@@ -1,9 +1,6 @@
 const puppeteer = require('puppeteer')
 const helpers = require('../helpers')
 const constants = require('../constants')
-const telegramActions = require('../telegram/actions')
-const telegramBot = require('../telegram/bot')
-const dbActions = require('../db/actions')
 
 const initBrowser = async () => {
   const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
@@ -41,26 +38,18 @@ const scrapListingData = async (page, elements, platform) =>
     []
   )
 
-const visitUrl = async (page, url, sendedListings, user) => {
-  const platform = helpers.getPlatformByUrl(url)
+const visitUrl = async (page, url, user, p) => {
+  const platform = process.env.NODE_ENV !== 'production' && p ? p : helpers.getPlatformByUrl(url)
   await page.goto(url)
 
-  const newListings = helpers.findNewListings(
+  return helpers.findNewListings(
     await scrapListingData(
       page,
       await page.$$(constants.listingContainerSelectors[platform]),
       platform
     ),
-    sendedListings
+    user.sendedListings
   )
-
-  if (newListings.length) {
-    await telegramActions.sendListingsToUser(telegramBot, user, newListings)
-    await dbActions.updateSendedListings(
-      user.chatId,
-      sendedListings.concat(newListings.map(l => l.listingId))
-    )
-  }
 }
 
 module.exports = {

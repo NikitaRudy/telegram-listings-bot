@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://ab.onliner.by/sdapi/catalog/search/iframe -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Поиск</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="./search.ec029f6376a312e5.css">
+</head>
+<body class="no-touch">
+<div id="search-page" class="search" data-bind="css: {&#39;search_filter&#39;: $root.activeSearchType() === &#39;news&#39;}">
+
+    <div class="search__bar" data-bind="css: {&#39;search__bar_searching&#39;: $root.resultsInstance().isSearching}">
+        <div class="search__bar-wrapper">
+            <div class="search__suggests">
+                <div class="search__suggest-match" data-bind="html: $root.format.match($root.keyword(), $root.suggest.matchString())"><span class="text_match"></span></div>
+                <div class="search__suggest-addon" data-bind="css: {&#39;search__suggest-addon_active&#39;: !!$root.suggest.addonString()}, html: $root.suggest.addonString"></div>
+            </div>
+            <input class="search__input" type="text" placeholder="Поиск" value="" tabindex="1" data-bind="hasFocus: $root.hasFocus,
+                              value: $root.keyword,
+                              valueUpdate: &#39;input&#39;,
+                              event: {keydown: function (data, event) {return $root.onKeyDown(event)}}">
+        </div>
+
+        <div class="search__bar-wrapper">
+            <div class="search__tabs" style="overflow: hidden;">
+                <div class="search__tabs-list" data-bind="foreach: {data: $root.searchTypes, as: &#39;item&#39;}" style="transform: translateZ(0px); width: 407px;">
+                    <div class="search__tabs-item search__tabs-item_active active" data-bind="text: item.name,
+                                    css: {&#39;search__tabs-item_active&#39;: item.type === $root.activeSearchType()},
+                                    click: $root.changeSearchType.bind($root, item.type)">в каталоге</div>
+                
+                    <div class="search__tabs-item" data-bind="text: item.name,
+                                    css: {&#39;search__tabs-item_active&#39;: item.type === $root.activeSearchType()},
+                                    click: $root.changeSearchType.bind($root, item.type)">в новостях</div>
+                
+                    <div class="search__tabs-item" data-bind="text: item.name,
+                                    css: {&#39;search__tabs-item_active&#39;: item.type === $root.activeSearchType()},
+                                    click: $root.changeSearchType.bind($root, item.type)">на барахолке</div>
+                
+                    <div class="search__tabs-item" data-bind="text: item.name,
+                                    css: {&#39;search__tabs-item_active&#39;: item.type === $root.activeSearchType()},
+                                    click: $root.changeSearchType.bind($root, item.type)">на форуме</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ko if: $root.activeSearchType() === 'news' --><!-- /ko -->
+
+        <span class="search__close" data-dismiss="modal"></span>
+    </div>
+
+    <div class="search__content-wrapper" style="" data-bind="visible: true">
+
+        <!-- ko if: $root.resultsInstance().productsList() && $root.resultsInstance().productsList().length --><!-- /ko -->
+
+    <ul class="search__results" data-bind="foreach: {data: $root.resultsInstance().list, as: &#39;result&#39;}"></ul>
+
+    <div class="search__loader" data-bind="css: {&#39;search__loader_active&#39;: $root.resultsInstance().isLoading}">
+        <div class="search__loader-more" style="display: none" data-bind="visible: $root.resultsInstance().isVisibleMoreButton,
+                        event: {touchend: $root.resultsInstance().addNextPageList.bind($root.resultsInstance())}">Показать еще</div>
+    </div>
+
+    </div>
+
+</div>
+
+<script type="text/html" id="result-item-catalog">
+    <!-- ko if: !$data.full_name -->
+<div class="result__item result__item_category">
+    <a target="_parent"
+       data-bind="attr: {href: $data.html_url}, click: $root.onClickWithoutPropagation, html: $data.name" class="category__title"></a>
+    <!-- ko if: $data.products_count -->
+    <span class="category__count">
+        <span data-bind="text: $data.products_count"></span>&nbsp;<span data-bind="text: $root.format.pluralForm($data.products_count, ['товар', 'товара', 'товаров'])"></span>
+    </span>
+    <!-- /ko -->
+</div>
+<!-- /ko -->
+
+<!-- ko if: $data.full_name -->
+<div class="result__item result__item_product">
+    <div class="product__offers">
+        <div class="product__offers__wrapper">
+            <div class="product__price">
+                <!-- ko if: $data.status === 'old' -->Снят с&nbsp;производства<!-- /ko -->
+                <!-- ko if: $data.status === 'new' -->Скоро в&nbsp;продаже<!-- /ko -->
+                <!-- ko if: $data.status === 'active' -->
+                <!-- ko if: $data.prices === null -->Нет в&nbsp;наличии<!-- /ko -->
+                <!-- ko if: $data.prices !== null -->
+                <a class="product__price-value product__price-value_primary" target="_parent"
+                   data-bind="attr: {href: $data.prices.html_url},
+                              click: $root.onClickWithoutPropagation">от&nbsp;<span data-bind="html: $root.format.minPrice($data.prices, 'BYN')"></span></a>
+                <!-- /ko -->
+                <!-- /ko -->
+            </div>
+            <!-- ko if: ($data.status === 'active' && $data.prices !== null) -->
+            <a class="button button_orange product__button" target="_parent"
+               data-bind="attr: {href: $data.prices.html_url},
+                          text: $data.prices.offers.count + '&nbsp;' + $root.format.pluralForm($data.prices.offers.count, ['предложение', 'предложения', 'предложений']),
+                          click: $root.onClickWithoutPropagation"></a>
+            <!-- /ko -->
+            <!-- ko if: $data.second.offers_count -->
+            <div class="product__adverts">
+                <a class="product__adverts-link" target="_parent"
+                   data-bind="{ click: $root.onClickWithoutPropagation,
+                                attr: {href: $data.html_url + '/used'},
+                                html: $data.second.offers_count + ' ' + $root.format.pluralForm($data.second.offers_count, ['объявление', 'объявления', 'объявлений']) }">
+                </a>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+
+    <div class="product__details">
+        <div class="product__title">
+            <a target="_parent" data-bind="html: $data.extended_name || $data.full_name, attr: {href: $data.html_url}, click: $root.onClickWithoutPropagation" class="product__title-link"></a><nobr>&nbsp;&nbsp;<a target="_parent"
+                                        data-bind="attr: {class: 'product__rating product__rating_' + $data.reviews.rating, href: $data.reviews.html_url},
+                                                   click: $root.onClickWithoutPropagation">
+                    <span data-bind="attr: {class: 'rating rating_' + $data.reviews.rating}"></span>
+                    <span class="product__reviews" data-bind="text: $data.reviews.count + '&nbsp;' + $root.format.pluralForm($data.reviews.count, ['отзыв', 'отзыва', 'отзывов']) "></span>
+                </a></nobr>
+        </div>
+        <a class="product__description" target="_parent" data-bind="attr: {href: $data.html_url}, click: $root.onClickWithoutPropagation, html: $data.description"></a>
+    </div>
+
+    <a class="product__preview" target="_parent"
+       data-bind="attr: {href: $data.html_url}, click: $root.onClickWithoutPropagation">
+        <img class="product__image" data-bind="attr: {src: $data.images.header}">
+    </a>
+
+    <label class="product__compare" data-bind="attr: {title: $data.compare() ? 'В&nbsp;сравнении' : 'К&nbsp;сравнению'}, click: $root.onClickWithoutPropagation">
+            <span class="i-checkbox i-checkbox_yellow">
+                <input class="i-checkbox__real" type="checkbox" data-bind="checked: $data.compare">
+                <span class="i-checkbox__faux"></span>
+            </span>
+    </label>
+</div>
+<!-- /ko -->
+</script>
+
+<script type="text/html" id="result-item-news">
+    <!--ko if: $data.monthGroupLabel-->
+    <div class="result__item result__item_news">
+        <div class="news__delimiter">
+            <div class="news__delimiter-text"
+                 data-bind="text: $data.monthGroupLabel"></div>
+        </div>
+    </div>
+<!--/ko-->
+
+<div class="result__item result__item_news">
+    <!--ko if: $data.image-->
+        <div class="news__preview">
+            <!--ko if: !$data.isWithImage() || $data.isImageLoading() -->
+            <div class="news__image"
+                 data-bind="css: {'news__image_animated': $data.isImageLoading(),
+                                  'news__image_nophoto': !$data.isImageLoading() && !$data.isWithImage()}">
+            </div>
+            <!--/ko-->
+
+            <!--ko if: $data.isWithImage() && !$data.isImageLoading() -->
+            <div class="news__image"
+                 data-bind="attr: {style: 'background-image: url(' + $data.image + ')'}">
+            </div>
+            <!--/ko-->
+
+            <!--ko if: !$root.resultsInstance().projectFilter.selected()-->
+            <div class="news__top">
+                <div class="news__detail">
+                    <div class="news__control">
+                        <div class="news__label news__label_primary"
+                             data-bind="text: $data.project.name"></div>
+                    </div>
+                </div>
+            </div>
+            <!--/ko-->
+        </div>
+    <!--/ko-->
+
+    <div class="news__data">
+        <!--ko if: !$data.image && !$root.resultsInstance().projectFilter.selected()-->
+            <div class="news__detail">
+                <div class="news__control">
+                    <div class="news__label news__label_primary"
+                         data-bind="text: $data.project.name"></div>
+                </div>
+            </div>
+        <!--/ko-->
+
+        <div class="news__clamping">
+            <div class="news__title">
+                <a class="news__link news__link_primary"
+                   target="_parent"
+                   data-bind="text: $data.title,
+                              attr: {href: $data.link},
+                              click: $root.onClickWithoutPropagation">
+                </a>
+            </div>
+            <div class="news__description"
+                 data-bind="text: $data.description">
+            </div>
+        </div>
+        <div class="news__detail">
+            <div class="news__control">
+                <div class="news__group">
+                    <!--ko if: $data.labels.has_video-->
+                        <div class="button-style button-style_obverse button-style_small button-style_noreflex news__button news__button_video"></div>
+                    <!--/ko-->
+
+                    <!--ko if: $data.counters.views-->
+                        <div class="button-style button-style_obverse button-style_small button-style_noreflex news__button news__button_views"
+                             data-bind="css: {'button-style_obverse': !$data.labels.popular,
+                                              'button-style_excess': $data.labels.popular,
+                                              'news__button_views_popular': $data.labels.popular}">
+                            <!--ko text: $root.format.numberKFormatter($data.counters.views)--><!--/ko-->
+                        </div>
+                    <!--/ko-->
+
+                    <div class="button-style button-style_adscititious button-style_small button-style_noreflex news__button news__button_comments">
+                        <!--ko text: $data.counters.comments--><!--/ko-->
+                    </div>
+                </div>
+
+                <div class="news__time"
+                     data-bind="text: $root.moment($data.created_at).format('D MMMM YYYY в HH.mm')"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
+<script type="text/html" id="result-item-baraholka">
+    <div class="result__item result__item_baraholka">
+    <div class="baraholka__category-wrap">
+        <div class="baraholka__category baraholka__category_type_2" data-bind="attr: {class: 'baraholka__category baraholka__category_type_' + $data.category}"></div>
+    </div>
+    <div class="baraholka__title">
+        <span data-bind="html: $data.link"></span>
+    </div>
+    <div class="baraholka__price" data-bind="css: {'baraholka__price_empty': !$data.hasPrice}">
+        <span class="baraholka__price-value baraholka__price-value_primary">
+            <span data-bind="html: $data.priceBynFormatted"></span>
+            <span data-bind="html: $data.priceBynCurrencySign"></span>
+        </span>
+    </div>
+    <div class="baraholka__bargain">
+        <span data-bind="html: $data.bargain"></span>
+    </div>
+</div>
+</script>
+
+<script type="text/html" id="result-item-forum">
+    <div class="result__item result__item_forum">
+    <div class="forum__title" data-bind="html: $data"></div>
+</div>
+</script>
+
+<script type="text/html" id="result-item-additional">
+    <div class="result__item result__item_category">
+    <span class="category__title" data-bind="html: $data.name"></span>
+</div>
+</script>
+
+<script type="text/html" id="filter-dropdown">
+    <div class="search__filter-item">
+    <div class="dropdown-style__handle search__filter-dropdown-handle">
+        <a href="#" class="search__filter-link search__filter-link_complementary search__filter-link_arrow_bottom"
+           data-bind="click: $data.toggle.bind($data),
+                      text: $data.getSelectedText()"></a>
+        <div class="dropdown-style dropdown-style_primary dropdown-style_small dropdown-style_bottom-left search__filter-dropdown search__filter-dropdown_width_xxss"
+             data-bind="css: { 'dropdown-style_visible': $data.isOpen }">
+            <div class="dropdown-style__content">
+                <ul class="dropdown-style__list"
+                    data-bind="foreach: { data: $data.optionsList, as: 'option' }">
+
+                    <li class="dropdown-style__item dropdown-style__item_indent">
+                        <label class="dropdown-style__checkbox-label">
+                            <span class="i-checkbox i-checkbox_tip dropdown-style__checkbox">
+                                <input type="radio" class="i-checkbox__real"
+                                       data-bind="value: option.key,
+                                                  checked: $parent.selected,
+                                                  attr: { 'name': $parent.groupName }">
+                                <span class="i-checkbox__faux"></span>
+                                <span class="dropdown-style__checkbox-text"
+                                      data-bind="text: option.text"></span>
+                            </span>
+                        </label>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
+<script type="text/html" id="filter-checkbox">
+    <div class="search__filter-item">
+    <label class="search__filter-checkbox-label">
+        <span class="i-checkbox search__filter-checkbox">
+            <input type="checkbox" class="i-checkbox__real"
+                   data-bind="checked: $data.checked">
+            <span class="i-checkbox__faux"></span>
+            <span class="search__filter-checkbox-text"
+                  data-bind="text: $data.label"></span>
+        </span>
+    </label>
+</div>
+</script>
+
+<div class="compare-button-container compare-button-container_responsive" id="compare-button-container">
+
+    <div class="compare-button-container__inner">
+
+        <div class="compare-button" data-bind="css: {&#39;compare-button_visible&#39;: $root.states.visible,
+                              &#39;compare-button_hidden&#39;: $root.states.hidden,
+                              &#39;compare-button_animated&#39;: $root.states.animated}">
+            <div class="compare-button__inner-container">
+                <div class="compare-button__inner" data-bind="css: {&#39;compare-button__inner_moved&#39;: $root.states.moved},
+                                event:{mouseout: $root.onMouseout.bind($root),
+                                       mouseover: $root.onMouseover.bind($root)}">
+
+                    <div class="compare-button__state compare-button__state_initial">
+                        <a title="Очистить список сравнения" tabindex="-1" class="compare-button__sub compare-button__sub_control" data-bind="click: $root.doMoved.bind($root)">
+                            <span class="compare-button__icon compare-button__icon_trash"></span>
+                        </a>
+
+                        <a class="compare-button__sub compare-button__sub_main" target="_parent" data-bind="attr: {href: $root.link}" href="https://catalog.onliner.by/compare/">
+                            <span data-bind="html: $root.text">0&nbsp;товаров</span> в&nbsp;сравнении
+                        </a>
+                    </div>
+
+                    <div class="compare-button__state compare-button__state_clear compare-button__state_hidden" data-bind="click: $root.clear.bind($root)">
+                        <a tabindex="-1" class="compare-button__sub">Очистить список сравнения</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-button-container__poof" data-bind="css: {&#39;compare-button-container__poof_action&#39;: $root.states.poof}"></div>
+    </div>
+</div>
+
+<script src="./search.35af4d17ead4d792.js"></script>
+
+
+
+</body></html>

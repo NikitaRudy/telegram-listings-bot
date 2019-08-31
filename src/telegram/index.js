@@ -1,3 +1,5 @@
+process.env.NODE_ENV !== 'production' && require('dotenv').config()
+
 const http = require('http')
 
 const handlers = require('./handlers')
@@ -13,7 +15,11 @@ const telegramBot = require('./bot')
   telegramBot.command('subscriptions', handlers.subscriptions)
   telegramBot.help(handlers.help)
 
-  telegramBot.telegram.setWebhook(process.env.TELEGRAM_WEBHOOK)
+  if (process.env.NODE_ENV === 'production') {
+    telegramBot.telegram.setWebhook(process.env.TELEGRAM_WEBHOOK)
+  } else {
+    telegramBot.launch()
+  }
 })()
 
 http

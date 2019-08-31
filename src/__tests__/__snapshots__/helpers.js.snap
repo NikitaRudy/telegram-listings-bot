@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncIterate 1`] = `Array []`;
+
+exports[`asyncIterate 2`] = `
+Array [
+  2,
+  3,
+  4,
+]
+`;
+
+exports[`extractListingIdFromUrl 1`] = `"/kia/ceed/1231231"`;
+
+exports[`extractListingIdFromUrl 2`] = `"/cars/1231243214"`;
+
+exports[`findNewListings 1`] = `
+Array [
+  Object {
+    "listingId": "/kia/ceed/1231232",
+    "screenshot": Object {
+      "data": Array [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      "type": "Buffer",
+    },
+    "url": "https://av.by/kia/ceed/1231232",
+  },
+  Object {
+    "listingId": "/cars/12314243214",
+    "screenshot": Object {
+      "data": Array [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      "type": "Buffer",
+    },
+    "url": "https://ab.onliner.by/cars/12314243214",
+  },
+]
+`;
+
+exports[`getPlatformByUrl 1`] = `"avby"`;
+
+exports[`getPlatformByUrl 2`] = `"baraholka"`;
+
+exports[`processUrl 1`] = `"https://cars.av.by/kia/ceed/1231231"`;
+
+exports[`processUrl 2`] = `"https://ab.onliner.by/cars/1231243214"`;
+
+exports[`processUrl 3`] = `"https://ab.onliner.by/cars/1231243214"`;
+
+exports[`processUrl 4`] = `"https://cars.av.by/kia/ceed/1231231"`;
+
+exports[`sameHost 1`] = `true`;
+
+exports[`sameHost 2`] = `true`;
+
+exports[`sameHost 3`] = `false`;
+
+exports[`sameHost 4`] = `false`;
+
+exports[`searchPath 1`] = `true`;
+
+exports[`searchPath 2`] = `true`;
+
+exports[`searchPath 3`] = `false`;
+
+exports[`searchPath 4`] = `false`;
+
+exports[`searchPath 5`] = `false`;
+
+exports[`searchTermPresented 1`] = `true`;
+
+exports[`searchTermPresented 2`] = `true`;
+
+exports[`searchTermPresented 3`] = `false`;
+
+exports[`searchTermPresented 4`] = `false`;
+
+exports[`selectChatIdAndFirstArg 1`] = `
+Object {
+  "arg": "gqerwqeqweqweqweq",
+  "chatId": "123124",
+}
+`;
+
+exports[`selectUserAndChatId 1`] = `"johndoe"`;
+
+exports[`selectUserAndChatId 2`] = `"123124"`;
+
+exports[`selectUserCommandArgs 1`] = `"gqerwqeqweqweqweq"`;

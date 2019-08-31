@@ -7,7 +7,11 @@
     "telegram": "node ./src/telegram",
     "scraper": "node ./src/scraper",
     "test": "jest",
-    "start": "npm run telegram"
+    "test:watch": "jest --watch",
+    "start": "npm run telegram",
+    "db:create": "docker rm mongo-server && docker run -p 27017:27017 --name mongo-server -d mongo",
+    "db:migrate": "node ./src/db/migrations",
+    "db:start": "docker start mongo-server"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +22,10 @@
     "telegraf": "^3.32.0"
   },
   "devDependencies": {
-    "@juno/frontend-config": "github:gojuno/frontend-config",
+    "@juno/frontend-config": "github:gojuno/frontend-config#46b275b4fa08e9b871e6315ae969c247150693fc",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.3",
+    "dotenv": "^8.1.0",
     "jest": "^24.9.0",
     "nodemon": "^1.19.1"
   },
@@ -27,12 +34,13 @@
   },
   "eslintIgnore": [
     "node_modules",
-    "dist"
+    "dist",
+    "./src/scraper/__tests__/platform-mocks"
   ],
   "prettier": "@juno/frontend-config/prettier",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm test"
     }
   },
   "lint-staged": {

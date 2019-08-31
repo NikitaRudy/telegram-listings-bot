@@ -1,0 +1,133 @@
+.fs-item {
+    padding: 12px 10px;
+    font-size: 12px;
+    font-family: Tahoma,Verdana;
+    border-bottom: 1px solid #eee;
+    height: 14px;
+}
+
+.fs-item:hover,
+.fs-item-selected {
+    background: #eff4fd;
+    cursor: pointer;
+}
+
+.fs-item a {
+    font-weight: bold;
+}
+
+.fs-item:hover a,
+.fs-item-selected a {
+    text-decoration: none;
+}
+
+.fs-item a:hover {
+    color:#004d99;
+}
+
+.fs-item-fleamarket-link a {
+    margin-left: 50px;
+}
+
+.fs-item-fleamarket-link {
+    position: relative;
+    display:inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    float: left;
+    width: 58%;
+    text-overflow: ellipsis;
+}
+
+.fs-item-fleamarket-link-fill {
+    width: 100%;
+}
+
+.fs-item-forumlink {
+    position: relative;
+    padding-left: 25px;
+}
+
+.fs-item-forumlink span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 16px;
+    background: url(http://forum.onliner.by/static/img/b-ico.png) -16px 0px;
+}
+
+.fs-item-ba-price {
+    display:inline-block;
+    text-align: right;
+    float: right;
+    width: 42%;
+    font-weight: bold;
+    text-align: right;
+}
+
+.fs-item-ba-price .price-primary {
+    font-weight: 700;
+    color: #000000;
+}
+
+.fs-item-ba-price .price-secondary {
+    color: #999999;
+}
+
+.fs-item-ba-price span {
+    font-weight:normal;
+}
+
+.fs-item-ba-torg {
+    display: inline-block;
+    width: 35px;
+    padding-right: 5px;
+    font-size: 11px;
+    color: #f00;
+}
+
+.fs-clip-shadow {
+    position:absolute;
+    top:0;
+    margin-left:100%;
+    left:-15px;
+    width:15px;
+    height:100%;
+    background:url(http://forum.onliner.by/static/img/nick-shd.png) no-repeat 0 -600px;
+}
+
+.fs-item:hover .fs-clip-shadow,
+.fs-item-selected .fs-clip-shadow {
+    background-position: 0 -450px;
+}
+
+.fs-ba-label {
+    width:40px; height:9px; background-image:url(http://forum.onliner.by/static/img/ba-label.png); font-size:1px;
+    position:absolute; top:3px;
+}
+.fs-ba-label-1 {
+
+}
+.fs-ba-label-2 {
+    background-position:-43px 50%;
+}
+.fs-ba-label-3 {
+    background-position:-85px 50%;
+}
+.fs-ba-label-5 {
+    background-position:-129px 50%;
+}
+.fs-ba-label-4 {
+    background-position:-171px 50%;
+}
+.fs-ba-label-6 {
+    background-position:-214px 50%;
+}
+.fs-ba-label-7 {
+    background-position:-257px 50%; width:41px;
+}
+.fs-item{padding: 12px 10px;border-bottom:1px solid #eee;overflow:hidden;zoom:1;font:12px Tahoma,Verdana,sans-serif; height: auto;}
+    		.fs-item:hover .fs-item-fleamarket-link strong{text-decoration:underline}
+					.fs-item-fleamarket-link a{margin:0 0 0 50px}
+						.fs-item-fleamarket-link__region{margin:0 0 0 10px;color:#808080;font-size:11px;font-weight:normal}
