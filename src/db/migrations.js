@@ -1,7 +1,7 @@
-require('dotenv').config()
+require('dotenv').config();
 
-const connectToDb = require('./index')
-const User = require('./User')
+const connectToDb = require('./index');
+const User = require('./User');
 
 const user = {
   'chatId': process.env.CHAT_ID,
@@ -12,10 +12,10 @@ const user = {
     'https://ab.onliner.by/#max-price=10000&country=248&region=349&min-year=2009&min-capacity=1.6&transmission[]=2&max-mileage=100000&seller_type[]=1&currency=USD&sort[]=last_time_up&page=1&car[0][25]=&car[1][57]=&car[2][19]=&car[3][32]=',
   ],
   'username': process.env.USER_NAME,
-}
+};
 
 connectToDb()
   .then(() => new User(user).save())
   .then(() => console.log('done'))
   .then(() => process.exit(0))
-  .catch(err => console.log('failed', err))
+  .catch(err => console.log('failed', err));

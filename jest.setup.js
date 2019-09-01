@@ -1,3 +1,3 @@
-require('dotenv').config()
+require('dotenv').config();
 
-jest.setTimeout(30000)
+jest.setTimeout(50000);

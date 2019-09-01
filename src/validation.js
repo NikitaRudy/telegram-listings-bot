@@ -1,10 +1,10 @@
-const url = require('url')
-const constants = require('./constants')
-const messages = require('./telegram/messages')
-const helpers = require('./helpers')
+const url = require('url');
+const constants = require('./constants');
+const messages = require('./telegram/messages');
+const helpers = require('./helpers');
 
 const validateSubscribeUrl = u => {
-  const { pathname, hostname, query, hash } = url.parse(u)
+  const { pathname, hostname, query, hash } = url.parse(u);
 
   return {
     error: !constants.platformsArr.some(
@@ -14,9 +14,9 @@ const validateSubscribeUrl = u => {
         helpers.searchTermPresented(platform, query, hash)
     ),
     message: messages.validation.url,
-  }
-}
+  };
+};
 
 module.exports = {
   validateSubscribeUrl,
-}
+};

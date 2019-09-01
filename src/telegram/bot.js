@@ -1,3 +1,3 @@
-const Telegraf = require('telegraf')
+const Telegraf = require('telegraf');
 
-module.exports = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
+module.exports = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
