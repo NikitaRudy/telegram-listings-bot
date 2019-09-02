@@ -8,14 +8,14 @@ const start = async ctx => {
   ctx.replyWithHTML(messages.start);
 };
 
-const subscribe = async ctx => {
+const add = async ctx => {
   const { chatId, arg } = helpers.selectChatIdAndFirstArg(ctx);
 
   await dbActions.addSubscribedUrl(chatId, arg);
-  ctx.reply(messages.subscribe);
+  ctx.reply(messages.add);
 };
 
-const subscriptions = async ctx => {
+const list = async ctx => {
   const { chatId } = helpers.selectUserAndChatId(ctx);
   const { subscribedUrls } = await dbActions.getUser(chatId);
 
@@ -32,11 +32,11 @@ const help = async ctx => {
   ctx.reply(messages.help);
 };
 
-const unsubscribe = async ctx => {
+const remove = async ctx => {
   const { chatId, arg } = helpers.selectChatIdAndFirstArg(ctx);
 
   if (!arg) {
-    return ctx.reply(messages.unsubscribe.empty);
+    return ctx.reply(messages.remove.empty);
   }
 
   if (arg === 'all') {
@@ -45,13 +45,13 @@ const unsubscribe = async ctx => {
     await dbActions.removeSubscribedUrl(chatId, arg);
   }
 
-  return ctx.reply(messages.unsubscribe.success);
+  return ctx.reply(messages.remove.success);
 };
 
 module.exports = {
   start,
-  subscribe,
-  subscriptions,
+  add,
+  list,
   help,
-  unsubscribe,
+  remove,
 };

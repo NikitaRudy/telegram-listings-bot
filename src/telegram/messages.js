@@ -8,19 +8,19 @@ const start =
   )}\n` +
   '2. Set the filter you interested in\n' +
   '3. Copy url with applied filters\n' +
-  '4. type /subscribe {URL FROM STEP 3} command';
+  '4. type /add {URL FROM STEP 3} command';
 
 const help =
   '/start - initialize bot\n' +
-  '/subscribe {URL} - subscribe to listings updates from provided url\n' +
-  '/subscriptions - list subscribed urls\n' +
-  '/unsubscribe {URL} - unsubscribe form provided URL updates';
+  '/add {URL} - add to listings updates from provided url\n' +
+  '/list - list subscribed urls\n' +
+  '/remove {URL} - unsubscribe form provided URL updates';
 
-const subscribe = 'Subscribed!';
-const subscriptions = 'No subscriptions yet';
-const unsubscribe = {
+const add = 'Subscribed!';
+const list = 'No subscriptions yet';
+const remove = {
   success: 'Unsubscribed!',
-  empty: 'Provide an url to unsubscribe',
+  empty: 'Provide an url to remove',
 };
 
 const validation = {
@@ -36,9 +36,9 @@ const validation = {
 module.exports = {
   start,
   help,
-  subscribe,
-  subscriptions,
-  unsubscribe,
+  add,
+  list,
+  remove,
   link,
   validation,
 };

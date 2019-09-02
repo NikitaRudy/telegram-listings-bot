@@ -39,7 +39,7 @@ const scrapListingData = async (page, elements, platform) =>
   );
 
 const visitUrl = async (page, url, user, p) => {
-  const platform = process.env.NODE_ENV !== 'production' && p ? p : helpers.getPlatformByUrl(url);
+  const platform = p || helpers.getPlatformByUrl(url);
   await page.goto(url);
 
   return helpers.findNewListings(

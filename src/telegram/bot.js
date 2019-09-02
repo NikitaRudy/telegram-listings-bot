@@ -17,9 +17,9 @@ bot.use(async (ctx, next) => {
 });
 
 bot.start(handlers.start);
-bot.command('subscribe', handlers.subscribe);
-bot.command('unsubscribe', handlers.unsubscribe);
-bot.command('subscriptions', handlers.subscriptions);
+bot.command('add', handlers.add);
+bot.command('remove', handlers.remove);
+bot.command('list', handlers.list);
 bot.help(handlers.help);
 
 module.exports = bot;
