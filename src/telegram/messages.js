@@ -18,13 +18,19 @@ const help =
 
 const subscribe = 'Subscribed!';
 const subscriptions = 'No subscriptions yet';
-const unsubscribe = 'Unsubscribed!';
+const unsubscribe = {
+  success: 'Unsubscribed!',
+  empty: 'Provide an url to unsubscribe',
+};
 
 const validation = {
-  url:
-    'Provide a valid url. Valid url examples:\n' +
-    'https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009 or\n\n' +
-    'https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1',
+  subscribedUrls: {
+    invalidUrl:
+      'Provide a valid url. Valid url examples:\n' +
+      'https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009 or\n\n' +
+      'https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1',
+    limit: 'You have reached subscriptions limit',
+  },
 };
 
 module.exports = {

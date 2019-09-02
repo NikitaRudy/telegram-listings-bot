@@ -1,6 +1,5 @@
 const helpers = require('../helpers');
 const dbActions = require('../db/actions');
-const validation = require('../validation');
 const messages = require('./messages');
 
 const start = async ctx => {
@@ -11,14 +10,9 @@ const start = async ctx => {
 
 const subscribe = async ctx => {
   const { chatId, arg } = helpers.selectChatIdAndFirstArg(ctx);
-  const { error, message } = validation.validateSubscribeUrl(arg);
 
-  if (error) {
-    ctx.reply(message);
-  } else {
-    await dbActions.addSubscribedUrl(chatId, arg);
-    ctx.reply(messages.subscribe);
-  }
+  await dbActions.addSubscribedUrl(chatId, arg);
+  ctx.reply(messages.subscribe);
 };
 
 const subscriptions = async ctx => {
@@ -41,13 +35,17 @@ const help = async ctx => {
 const unsubscribe = async ctx => {
   const { chatId, arg } = helpers.selectChatIdAndFirstArg(ctx);
 
+  if (!arg) {
+    return ctx.reply(messages.unsubscribe.empty);
+  }
+
   if (arg === 'all') {
     await dbActions.removeSubscriptions(chatId);
   } else {
     await dbActions.removeSubscribedUrl(chatId, arg);
   }
 
-  ctx.reply(messages.unsubscribe);
+  return ctx.reply(messages.unsubscribe.success);
 };
 
 module.exports = {

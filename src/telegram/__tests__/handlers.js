@@ -84,6 +84,40 @@ test('subscribe', async () => {
   expect(user.subscribedUrls).toEqual(
     expect.arrayContaining(['https://cars.av.by/search?brand_id%5B0%5D=433'])
   );
+
+  await expect(handlers.subscribe(formatCtx('/subscribe'))).rejects.toBeInstanceOf(
+    mongoose.Error.ValidationError
+  );
+
+  await expect(
+    handlers.subscribe(formatCtx('/subscribe https://google.com'))
+  ).rejects.toBeInstanceOf(mongoose.Error.ValidationError);
+
+  await User.updateOne(
+    { chatId: input.chatId },
+    {
+      subscribedUrls: [
+        'https://cars.av.by/search?brand_id%5B0%5D=4533',
+        'https://cars.av.by/search?brand_id%5B0%5D=2433',
+        'https://cars.av.by/search?brand_id%5B0%5D=1433',
+        'https://cars.av.by/search?brand_id%5B0%5D=24323',
+        'https://cars.av.by/search?brand_id%5B0%5D=433435',
+        'https://cars.av.by/search?brand_id%5B0%5D=433fe',
+        'https://cars.av.by/search?brand_id%5B0%5D=433343q',
+        'https://cars.av.by/search?brand_id%5B0%5D=433qegerhrt',
+        'https://cars.av.by/search?brand_id%5B0%5D=433qegerhrtqw',
+        'https://cars.av.by/search?brand_id%5B0%5D=433qegerhrtqw',
+        'https://cars.av.by/search?brand_id%5B0%5D=433qegerhrtqw',
+        'https://cars.av.by/search?brand_id%5B0%5D=433qegerhrtqw',
+      ],
+    }
+  );
+
+  await expect(
+    handlers.subscribe(
+      formatCtx('/subscribe https://cars.av.by/search?brand_id%www5B0%5D=433qegerhrtqw')
+    )
+  ).rejects.toBeInstanceOf(mongoose.Error.ValidationError);
 });
 
 test('unsubscribe', async () => {
@@ -102,7 +136,7 @@ test('unsubscribe', async () => {
 
   const user = await User.findOne({ chatId: input.chatId }).lean();
 
-  expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.unsubscribe);
+  expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.unsubscribe.success);
   expect(user.subscribedUrls).toHaveLength(1);
   expect(user.subscribedUrls[0]).toEqual('https://cars.av.by/search?brand_id%5B0%53=5Q3');
 
@@ -111,6 +145,10 @@ test('unsubscribe', async () => {
   const result = await User.findOne({ chatId: input.chatId }).lean();
   expect(result.subscribedUrls).toHaveLength(1);
   expect(result.subscribedUrls[0]).toEqual('https://cars.av.by/search?brand_id%5B0%53=5Q3');
+
+  await handlers.unsubscribe(formatCtx('/unsubscribe'));
+
+  expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.unsubscribe.empty);
 });
 
 test('unsubscribe all', async () => {
@@ -127,7 +165,7 @@ test('unsubscribe all', async () => {
 
   const user = await User.findOne({ chatId: input.chatId }).lean();
 
-  expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.unsubscribe);
+  expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.unsubscribe.success);
   expect(user.subscribedUrls).toHaveLength(0);
 });
 

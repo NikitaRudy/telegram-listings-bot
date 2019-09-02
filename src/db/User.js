@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const validation = require('./validation');
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -16,6 +18,7 @@ const userSchema = new mongoose.Schema({
   subscribedUrls: {
     type: [String],
     default: [],
+    validate: validation.subscribedUrls,
   },
 });
 

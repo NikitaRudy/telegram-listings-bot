@@ -2,7 +2,8 @@ const User = require('./User');
 
 const getUser = chatId => User.findOne({ chatId }).lean();
 const getUsers = () => User.find().lean();
-const updateUser = (chatId, updates) => User.findOneAndUpdate({ chatId }, updates, { new: true });
+const updateUser = (chatId, updates) =>
+  User.findOneAndUpdate({ chatId }, updates, { new: true, runValidators: true });
 const updateSendedListings = (chatId, listings) => updateUser(chatId, { sendedListings: listings });
 const getUsersWithSubscribedUrl = async () =>
   (await getUsers()).filter(user => user.subscribedUrls.length);
@@ -11,7 +12,7 @@ const saveUser = ({ username, chatId }) =>
   User.findOneAndUpdate(
     { chatId },
     { username, chatId },
-    { upsert: true, new: true, setDefaultsOnInsert: true }
+    { upsert: true, new: true, setDefaultsOnInsert: true, runValidators: true }
   );
 
 const addSubscribedUrl = async (chatId, url) => {
