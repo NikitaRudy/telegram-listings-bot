@@ -7,6 +7,8 @@ const connectToDb = require('../../db');
 const ctxMock = {
   reply: jest.fn(() => Promise.resolve()),
   replyWithHTML: jest.fn(() => Promise.resolve()),
+  replyWithMarkdown: jest.fn(() => Promise.resolve()),
+  replyWithMarkdownDisabledLinkPreview: jest.fn(() => Promise.resolve()),
   from: {
     id: '131434',
     username: 'johndoe',
@@ -45,6 +47,7 @@ afterAll(() => mongoose.disconnect());
 beforeEach(() => {
   ctxMock.reply.mockReset();
   ctxMock.replyWithHTML.mockReset();
+  ctxMock.replyWithMarkdownDisabledLinkPreview.mockReset();
   return new User(input).save();
 });
 afterEach(() => User.deleteMany({}));
@@ -58,7 +61,7 @@ describe('start', () => {
 
     expect(user.username).toEqual(input.username);
     expect(user.chatId).toEqual(input.chatId);
-    expect(ctxMock.replyWithHTML).toHaveBeenLastCalledWith(messages.start);
+    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(messages.start);
   });
 
   test('should not save user if /start was called multiple times after initialization', async () => {
@@ -75,7 +78,7 @@ describe('start', () => {
 test('help', async () => {
   await handlers.help(ctxMock);
 
-  expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.help);
+  expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(messages.help);
 });
 
 describe('add', () => {
@@ -84,7 +87,7 @@ describe('add', () => {
 
     const user = await User.findOne({ chatId: input.chatId }).lean();
 
-    expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.add);
+    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(messages.add);
     expect(user.subscribedUrls).toHaveLength(1);
     expect(user.subscribedUrls).toEqual(
       expect.arrayContaining(['https://cars.av.by/search?brand_id%5B0%5D=433'])
@@ -145,7 +148,9 @@ describe('remove', () => {
 
     const user = await User.findOne({ chatId: input.chatId }).lean();
 
-    expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.remove.success);
+    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(
+      messages.remove.success
+    );
     expect(user.subscribedUrls).toHaveLength(1);
     expect(user.subscribedUrls[0]).toEqual('https://cars.av.by/search?brand_id%5B0%53=5Q3');
   });
@@ -168,7 +173,9 @@ describe('remove', () => {
   test('should reply with error message if called without arguments', async () => {
     await handlers.remove(formatCtx('/remove'));
 
-    expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.remove.empty);
+    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(
+      messages.remove.empty
+    );
   });
 });
 
@@ -186,7 +193,9 @@ test('remove all', async () => {
 
   const user = await User.findOne({ chatId: input.chatId }).lean();
 
-  expect(ctxMock.reply).toHaveBeenLastCalledWith(messages.remove.success);
+  expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(
+    messages.remove.success
+  );
   expect(user.subscribedUrls).toHaveLength(0);
 });
 
@@ -195,7 +204,9 @@ test('list', async () => {
 
   await handlers.list(ctxMock);
   const replyMessage =
-    ctxMock.replyWithHTML.mock.calls[ctxMock.replyWithHTML.mock.calls.length - 1][0];
+    ctxMock.replyWithMarkdownDisabledLinkPreview.mock.calls[
+      ctxMock.replyWithMarkdownDisabledLinkPreview.mock.calls.length - 1
+    ][0];
 
   expect(replyMessage.includes(subscribedUrls[0])).toEqual(true);
   expect(replyMessage.includes(subscribedUrls[1])).toEqual(true);
