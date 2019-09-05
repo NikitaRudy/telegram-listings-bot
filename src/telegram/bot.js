@@ -6,11 +6,11 @@ const { log } = require('../utils');
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
-bot.use((ctx, next) => {
+bot.use(async (ctx, next) => {
   ctx.replyWithMarkdownDisabledLinkPreview = (md, extra, ...args) =>
     ctx.replyWithMarkdown(md, { ...extra, disable_web_page_preview: true }, ...args);
 
-  next(ctx);
+  await next(ctx);
 });
 
 bot.use(async (ctx, next) => {
@@ -21,7 +21,7 @@ bot.use(async (ctx, next) => {
       const [field] = Object.keys(error.errors);
       ctx.replyWithMarkdownDisabledLinkPreview(error.errors[field].message);
     } else {
-      log('an error occurred', error);
+      log('error middleware', 'an error occurred', error);
     }
   }
 });

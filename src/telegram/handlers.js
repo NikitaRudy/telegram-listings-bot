@@ -4,7 +4,7 @@ const messages = require('./messages');
 const { log } = require('../utils');
 
 const start = async ctx => {
-  log('received start command');
+  log('start handler', 'command received');
   await dbActions.saveUser(helpers.selectUserAndChatId(ctx));
 
   ctx.replyWithMarkdownDisabledLinkPreview(messages.start);
@@ -12,43 +12,46 @@ const start = async ctx => {
 
 const add = async ctx => {
   const { chatId, arg } = helpers.selectChatIdAndFirstArg(ctx);
-  log('received add command', chatId, arg);
+  log('add handler', 'command received', `provided argument: ${arg}`);
   await dbActions.addSubscribedUrl(chatId, arg);
   ctx.replyWithMarkdownDisabledLinkPreview(messages.add);
 };
 
 const list = async ctx => {
   const { chatId } = helpers.selectUserAndChatId(ctx);
-  log('received list command', chatId);
+  log('list handler', 'command received');
   const { subscribedUrls } = await dbActions.getUser(chatId);
 
   if (subscribedUrls.length) {
-    log('list command', 'replying to user', chatId, subscribedUrls);
+    log('list handler', 'replying to user');
     ctx.replyWithMarkdownDisabledLinkPreview(
       subscribedUrls.map((url, i) => messages.linkMD(url, `Subscription ${i + 1}`)).join('\n')
     );
   } else {
-    log('list command', 'empty list', chatId);
+    log('list handler', 'empty list');
     ctx.replyWithMarkdownDisabledLinkPreview(messages.list);
   }
 };
 
 const help = async ctx => {
-  log('received help command');
+  log('help handler', 'empty list');
   ctx.replyWithMarkdownDisabledLinkPreview(messages.help);
 };
 
 const remove = async ctx => {
   const { chatId, arg } = helpers.selectChatIdAndFirstArg(ctx);
-  log('received remove command', chatId, arg);
+  log('remove handler', 'command received', `provided argument: ${arg}`);
 
   if (!arg) {
+    log('remove handler', 'no url provided');
     return ctx.replyWithMarkdownDisabledLinkPreview(messages.remove.empty);
   }
 
   if (arg === 'all') {
+    log('remove handler', 'remove all');
     await dbActions.removeSubscriptions(chatId);
   } else {
+    log('remove handler', 'remove url');
     await dbActions.removeSubscribedUrl(chatId, arg);
   }
 

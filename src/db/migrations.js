@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const { log } = require('../utils');
+
 const connectToDb = require('./index');
 const User = require('./User');
 
@@ -16,6 +18,6 @@ const user = {
 
 connectToDb()
   .then(() => new User(user).save())
-  .then(() => console.log('done'))
+  .then(() => log('migrations', 'done'))
   .then(() => process.exit(0))
-  .catch(err => console.log('failed', err));
+  .catch(err => log('migrations', 'failed', err));
