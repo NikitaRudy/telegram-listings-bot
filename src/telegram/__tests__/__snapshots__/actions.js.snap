@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sendListingsToUser 1`] = `
+Array [
+  Array [
+    "123124",
+    Object {
+      "source": Object {
+        "data": Array [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ],
+        "type": "Buffer",
+      },
+    },
+    Object {
+      "caption": "https://av.by/kia/ceed/1231232",
+    },
+  ],
+  Array [
+    "123124",
+    Object {
+      "source": Object {
+        "data": Array [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ],
+        "type": "Buffer",
+      },
+    },
+    Object {
+      "caption": "https://ab.onliner.by/cars/12314243214",
+    },
+  ],
+]
+`;

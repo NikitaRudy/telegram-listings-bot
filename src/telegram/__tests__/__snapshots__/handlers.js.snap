@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add should add a new subscription 1`] = `Array []`;
+
+exports[`add should add a new subscription 2`] = `
+Object {
+  "__v": Any<Number>,
+  "_id": Any<ObjectID>,
+  "chatId": "131434",
+  "sendedListings": Array [],
+  "subscribedUrls": Array [
+    "https://cars.av.by/search?brand_id%5B0%5D=433",
+  ],
+  "username": "johndoe",
+}
+`;
+
+exports[`help 1`] = `Array []`;
+
+exports[`list 1`] = `
+Array [
+  Array [
+    "[Subscription 1](https://cars.av.by/search?brand_id%5B0%5D=433)
+[Subscription 2](https://cars.av.by/search?brand_id%5B0%53=5Q3)",
+  ],
+]
+`;
+
+exports[`remove all 1`] = `Array []`;
+
+exports[`remove all 2`] = `Array []`;
+
+exports[`remove should do nothing if url was not found 1`] = `
+Array [
+  "https://cars.av.by/search?brand_id%5B0%5D=433",
+]
+`;
+
+exports[`remove should remove subscribed url 1`] = `Array []`;
+
+exports[`remove should remove subscribed url 2`] = `
+Object {
+  "__v": Any<Number>,
+  "_id": Any<ObjectID>,
+  "chatId": "131434",
+  "sendedListings": Array [],
+  "subscribedUrls": Array [
+    "https://cars.av.by/search?brand_id%5B0%53=5Q3",
+  ],
+  "username": "johndoe",
+}
+`;
+
+exports[`remove should reply with error message if called without arguments 1`] = `Array []`;
+
+exports[`start should create a new user and reply with welcome text 1`] = `
+Object {
+  "__v": Any<Number>,
+  "_id": Any<ObjectID>,
+  "chatId": "131434",
+  "sendedListings": Array [],
+  "subscribedUrls": Array [],
+  "username": "johndoe",
+}
+`;
+
+exports[`start should create a new user and reply with welcome text 2`] = `Array []`;
+
+exports[`start should not save user if /start was called multiple times after initialization 1`] = `
+Array [
+  Object {
+    "chatId": "131434",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "johndoe",
+  },
+]
+`;

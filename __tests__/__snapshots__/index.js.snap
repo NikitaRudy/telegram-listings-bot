@@ -1,0 +1,451 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bot tests add should add an url and reply to user 1`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%5D=433",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests add should add an url and reply to user 2`] = `
+Array [
+  Array [
+    "*Subscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests add should not add url and reply to user if invalid url is provided 1`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests add should not add url and reply to user if invalid url is provided 2`] = `
+Array [
+  Array [
+    "*Provide a valid url. Valid url examples:*
+[example 1](https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009)
+[example 2](https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Provide a valid url. Valid url examples:*
+[example 1](https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009)
+[example 2](https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Provide a valid url. Valid url examples:*
+[example 1](https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009)
+[example 2](https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Provide a valid url. Valid url examples:*
+[example 1](https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009)
+[example 2](https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Provide a valid url. Valid url examples:*
+[example 1](https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009)
+[example 2](https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Provide a valid url. Valid url examples:*
+[example 1](https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009)
+[example 2](https://ab.onliner.by/#max-price=9000&country=248&currency=USD&sort[]=last_time_up&page=1)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests flow basic flow 1`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests flow basic flow 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%5D=433",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests flow basic flow 3`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%5D=433",
+      "https://cars.av.by/search?brand_id%5B0%53=5Q3",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests flow basic flow 4`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%53=5Q3",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests flow basic flow 5`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%53=5Q3",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests flow basic flow 6`] = `
+Array [
+  Array [
+    "*Hello!*
+*1. Go to* [av.by](https://cars.av.by/search) *or* [ab.onliner.by](https://ab.onliner.by)
+*2. Set the filter you interested in*
+*3. Copy url with applied filters*
+*4. type* \`/add <URL FROM STEP 3>\` *command*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "\`/start\` *- initialize bot*
+\`/add <URL>\` *- add to listings updates from provided url*
+\`/list\` *- list subscribed urls*
+\`/remove <URL>\` *- unsubscribe form provided URL updates*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*No subscriptions yet*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Subscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Subscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "[Subscription 1](https://cars.av.by/search?brand_id%5B0%53=5Q3)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests help multiple help calls 1`] = `
+Array [
+  Array [
+    "\`/start\` *- initialize bot*
+\`/add <URL>\` *- add to listings updates from provided url*
+\`/list\` *- list subscribed urls*
+\`/remove <URL>\` *- unsubscribe form provided URL updates*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests help multiple help calls 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests help should reply to user 1`] = `
+Array [
+  Array [
+    "\`/start\` *- initialize bot*
+\`/add <URL>\` *- add to listings updates from provided url*
+\`/list\` *- list subscribed urls*
+\`/remove <URL>\` *- unsubscribe form provided URL updates*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests help should reply to user 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests list should reply to user 1`] = `
+Array [
+  Array [
+    "*No subscriptions yet*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests list should reply to user 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests list should reply with subscription list if any 1`] = `
+Array [
+  Array [
+    "[Subscription 1](https://cars.av.by/search?brand_id%5B0%5D=433)
+[Subscription 2](https://cars.av.by/search?brand_id%5B0%53=5Q3)
+[Subscription 3](https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009&year_to=&currency=USD&price_from=&price_to=9000&transmission=2&body_id=&engine_volume_min=1600&engine_volume_max=&driving_id=&mileage_min=&mileage_max=100000&region_id=5&city_id=&interior_material=&interior_color=&order_from%5B%5D=1&exchange=&search_time=)
+[Subscription 4](https://ab.onliner.by/#country=248&currency=USD&sort[]=last_time_up&page=1&car[0][5]=)",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests list should reply with subscription list if any 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%5D=433",
+      "https://cars.av.by/search?brand_id%5B0%53=5Q3",
+      "https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009&year_to=&currency=USD&price_from=&price_to=9000&transmission=2&body_id=&engine_volume_min=1600&engine_volume_max=&driving_id=&mileage_min=&mileage_max=100000&region_id=5&city_id=&interior_material=&interior_color=&order_from%5B%5D=1&exchange=&search_time=",
+      "https://ab.onliner.by/#country=248&currency=USD&sort[]=last_time_up&page=1&car[0][5]=",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests remove should remove all urls if all argument is provided and reply to user 1`] = `
+Array [
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests remove should remove all urls if all argument is provided and reply to user 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests remove should remove provided url and reply to user 1`] = `
+Array [
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests remove should remove provided url and reply to user 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%53=5Q3",
+      "https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009&year_to=&currency=USD&price_from=&price_to=9000&transmission=2&body_id=&engine_volume_min=1600&engine_volume_max=&driving_id=&mileage_min=&mileage_max=100000&region_id=5&city_id=&interior_material=&interior_color=&order_from%5B%5D=1&exchange=&search_time=",
+      "https://ab.onliner.by/#country=248&currency=USD&sort[]=last_time_up&page=1&car[0][5]=",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests remove should works correctly if invalid argument provided 1`] = `
+Array [
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+  Array [
+    "*Unsubscribed!*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;
+
+exports[`bot tests remove should works correctly if invalid argument provided 2`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [
+      "https://cars.av.by/search?brand_id%5B0%5D=433",
+      "https://cars.av.by/search?brand_id%5B0%53=5Q3",
+      "https://cars.av.by/search?brand_id%5B0%5D=433&model_id%5B0%5D=&year_from=2009&year_to=&currency=USD&price_from=&price_to=9000&transmission=2&body_id=&engine_volume_min=1600&engine_volume_max=&driving_id=&mileage_min=&mileage_max=100000&region_id=5&city_id=&interior_material=&interior_color=&order_from%5B%5D=1&exchange=&search_time=",
+      "https://ab.onliner.by/#country=248&currency=USD&sort[]=last_time_up&page=1&car[0][5]=",
+    ],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests start multiple start calls 1`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests start should save new user and reply 1`] = `
+Array [
+  Object {
+    "chatId": "512345673",
+    "sendedListings": Array [],
+    "subscribedUrls": Array [],
+    "username": "username1123",
+  },
+]
+`;
+
+exports[`bot tests start should save new user and reply 2`] = `
+Array [
+  Array [
+    "*Hello!*
+*1. Go to* [av.by](https://cars.av.by/search) *or* [ab.onliner.by](https://ab.onliner.by)
+*2. Set the filter you interested in*
+*3. Copy url with applied filters*
+*4. type* \`/add <URL FROM STEP 3>\` *command*",
+    Object {
+      "disable_web_page_preview": true,
+    },
+  ],
+]
+`;

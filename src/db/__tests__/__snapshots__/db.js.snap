@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should save user 1`] = `
+Object {
+  "__v": Any<Number>,
+  "_id": Any<ObjectID>,
+  "chatId": "131434",
+  "sendedListings": Array [],
+  "subscribedUrls": Array [],
+  "username": "johndoe",
+}
+`;

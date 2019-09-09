@@ -1,0 +1,30 @@
+{
+  "update_id": 551805073,
+  "message": {
+    "message_id": 405,
+    "from": {
+      "id": 512345673,
+      "is_bot": false,
+      "first_name": "Joe",
+      "last_name": "Zen",
+      "username": "username1123",
+      "language_code": "en"
+    },
+    "chat": {
+      "id": 512345673,
+      "first_name": "Joe",
+      "last_name": "Zen",
+      "username": "username1123",
+      "type": "private"
+    },
+    "date": 1567759629,
+    "text": "/list",
+    "entities": [
+      {
+        "offset": 0,
+        "length": 5,
+        "type": "bot_command"
+      }
+    ]
+  }
+}

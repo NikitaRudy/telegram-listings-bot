@@ -3,6 +3,8 @@ const dbActions = require('../actions');
 const User = require('../User');
 const connectToDb = require('../');
 
+const testUtils = require('../../../test-utils');
+
 const input = {
   username: 'johndoe',
   chatId: '131434',
@@ -30,8 +32,7 @@ afterEach(() => User.deleteMany({}));
 test('getUser', async () => {
   const user = await dbActions.getUser(input.chatId);
 
-  expect(user.username).toEqual(input.username);
-  expect(user.chatId).toEqual(input.chatId);
+  expect(user).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });
 
 test('saveUser', async () => {
@@ -39,32 +40,25 @@ test('saveUser', async () => {
 
   const user = await dbActions.saveUser(mockUser);
 
-  expect(user.username).toEqual(mockUser.username);
-  expect(user.chatId).toEqual(mockUser.chatId);
-  expect(user.subscribedUrls).toHaveLength(0);
-  expect(user.sendedListings).toHaveLength(0);
+  expect(user.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });
 
 test('updateUser', async () => {
   const user = await dbActions.updateUser(input.chatId, { username: 'bill321' });
 
-  expect(user.username).toEqual('bill321');
-  expect(user.chatId).toEqual(input.chatId);
+  expect(user.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });
 
 test('getUsers', async () => {
-  const users = await dbActions.getUsers();
+  const users = await dbActions.getUsers().select(testUtils.mongooseUtils.selectOptions);
 
-  expect(users).toHaveLength(1);
-  expect(users[0].username).toEqual(input.username);
-  expect(users[0].chatId).toEqual(input.chatId);
+  expect(users).toMatchSnapshot();
 });
 
 test('updateSendedListings', async () => {
   const user = await dbActions.updateSendedListings(input.chatId, mockSendedListings);
 
-  expect(user.sendedListings).toHaveLength(mockSendedListings.length);
-  expect(user.chatId).toEqual(input.chatId);
+  expect(user.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });
 
 test('getUsersWithSubscribedUrl', async () => {
@@ -86,19 +80,18 @@ test('removeSubscribedUrl', async () => {
   await dbActions.updateUser(input.chatId, { subscribedUrls: mockSubscribedUrls });
 
   const result = await dbActions.removeSubscribedUrl(input.chatId, mockSubscribedUrls[0]);
-  expect(result.subscribedUrls).toHaveLength(mockSubscribedUrls.length - 1);
-  expect(result.subscribedUrls).toEqual(expect.not.arrayContaining([mockSubscribedUrls[0]]));
+  expect(result.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });
 
 test('addSubscribedUrl', async () => {
   const result = await dbActions.addSubscribedUrl(input.chatId, mockSubscribedUrls[0]);
-  expect(result.subscribedUrls).toHaveLength(1);
-  expect(result.subscribedUrls).toEqual(expect.arrayContaining([mockSubscribedUrls[0]]));
+
+  expect(result.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });
 
 test('removeSubscriptions', async () => {
   const result1 = await dbActions.updateUser(input.chatId, { subscribedUrls: mockSubscribedUrls });
-  expect(result1.subscribedUrls).toHaveLength(mockSubscribedUrls.length);
+  expect(result1.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
   const result2 = await dbActions.removeSubscriptions(input.chatId);
-  expect(result2.subscribedUrls).toHaveLength(0);
+  expect(result2.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });

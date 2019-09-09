@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const User = require('../User');
 const connectToDb = require('../');
 
+const testUtils = require('../../../test-utils');
+
 beforeAll(() => connectToDb(`${process.env.TEST_MONGO_HOST}/general`));
 afterAll(() => mongoose.disconnect());
 
@@ -15,10 +17,7 @@ test('should save user', async () => {
 
   const user = await new User(input).save();
 
-  expect(user.username).toEqual('johndoe');
-  expect(user.chatId).toEqual('131434');
-  expect(user.subscribedUrls).toHaveLength(0);
-  expect(user.sendedListings).toHaveLength(0);
+  expect(user.toObject()).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
 });
 
 test('should not save user without chatId or username', async () => {

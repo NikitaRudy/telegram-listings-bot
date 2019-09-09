@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const handlers = require('../handlers');
-const messages = require('../messages');
 const User = require('../../db/User');
 const connectToDb = require('../../db');
+
+const testUtils = require('../../../test-utils');
 
 const ctxMock = {
   reply: jest.fn(() => Promise.resolve()),
@@ -59,9 +60,8 @@ describe('start', () => {
 
     const user = await User.findOne(input).lean();
 
-    expect(user.username).toEqual(input.username);
-    expect(user.chatId).toEqual(input.chatId);
-    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(messages.start);
+    expect(user).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
+    expect(ctxMock.replyWithMarkdown.mock.calls).toMatchSnapshot();
   });
 
   test('should not save user if /start was called multiple times after initialization', async () => {
@@ -69,16 +69,16 @@ describe('start', () => {
     await handlers.start(ctxMock);
     await handlers.start(ctxMock);
 
-    const users = await User.find();
+    const users = await User.find().select(testUtils.mongooseUtils.selectOptions);
 
-    expect(users).toHaveLength(1);
+    expect(users).toMatchSnapshot();
   });
 });
 
 test('help', async () => {
   await handlers.help(ctxMock);
 
-  expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(messages.help);
+  expect(ctxMock.replyWithMarkdown.mock.calls).toMatchSnapshot();
 });
 
 describe('add', () => {
@@ -87,11 +87,8 @@ describe('add', () => {
 
     const user = await User.findOne({ chatId: input.chatId }).lean();
 
-    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(messages.add);
-    expect(user.subscribedUrls).toHaveLength(1);
-    expect(user.subscribedUrls).toEqual(
-      expect.arrayContaining(['https://cars.av.by/search?brand_id%5B0%5D=433'])
-    );
+    expect(ctxMock.replyWithMarkdown.mock.calls).toMatchSnapshot();
+    expect(user).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
   });
 
   test('should reject if called without arguments', async () => {
@@ -148,11 +145,8 @@ describe('remove', () => {
 
     const user = await User.findOne({ chatId: input.chatId }).lean();
 
-    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(
-      messages.remove.success
-    );
-    expect(user.subscribedUrls).toHaveLength(1);
-    expect(user.subscribedUrls[0]).toEqual('https://cars.av.by/search?brand_id%5B0%53=5Q3');
+    expect(ctxMock.replyWithMarkdown.mock.calls).toMatchSnapshot();
+    expect(user).toMatchSnapshot(testUtils.mongooseUtils.snapshotOptions);
   });
 
   test('should do nothing if url was not found', async () => {
@@ -166,16 +160,13 @@ describe('remove', () => {
     await handlers.remove(formatCtx('/remove w'));
 
     const result = await User.findOne({ chatId: input.chatId }).lean();
-    expect(result.subscribedUrls).toHaveLength(1);
-    expect(result.subscribedUrls[0]).toEqual('https://cars.av.by/search?brand_id%5B0%5D=433');
+    expect(result.subscribedUrls).toMatchSnapshot();
   });
 
   test('should reply with error message if called without arguments', async () => {
     await handlers.remove(formatCtx('/remove'));
 
-    expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(
-      messages.remove.empty
-    );
+    expect(ctxMock.replyWithMarkdown.mock.calls).toMatchSnapshot();
   });
 });
 
@@ -193,21 +184,14 @@ test('remove all', async () => {
 
   const user = await User.findOne({ chatId: input.chatId }).lean();
 
-  expect(ctxMock.replyWithMarkdownDisabledLinkPreview).toHaveBeenLastCalledWith(
-    messages.remove.success
-  );
-  expect(user.subscribedUrls).toHaveLength(0);
+  expect(ctxMock.replyWithMarkdown.mock.calls).toMatchSnapshot();
+  expect(user.subscribedUrls).toMatchSnapshot();
 });
 
 test('list', async () => {
   await User.updateOne({ chatId: input.chatId }, { subscribedUrls });
 
   await handlers.list(ctxMock);
-  const replyMessage =
-    ctxMock.replyWithMarkdownDisabledLinkPreview.mock.calls[
-      ctxMock.replyWithMarkdownDisabledLinkPreview.mock.calls.length - 1
-    ][0];
 
-  expect(replyMessage.includes(subscribedUrls[0])).toEqual(true);
-  expect(replyMessage.includes(subscribedUrls[1])).toEqual(true);
+  expect(ctxMock.replyWithMarkdownDisabledLinkPreview.mock.calls).toMatchSnapshot();
 });

@@ -15,6 +15,7 @@
     "no-await-in-loop": "warn",
     "no-unused-expressions": "off",
     "no-plusplus": "off",
-    "global-require": "warn"
+    "global-require": "warn",
+    "no-underscore-dangle": "off",
   }
 }
